@@ -1,7 +1,13 @@
 package file;
+/**
+ * 内存映射数组
+ */
+
+import com.sun.management.OperatingSystemMXBean;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -40,6 +46,8 @@ public class MappedBiggerFileReader {
         if(limit - position > arraySize){
             array = new byte[arraySize];
             mappedByteBuffers[count].get(array);
+            OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+            System.out.println(operatingSystemMXBean.getFreeSwapSpaceSize());
             return arraySize;
         }else{
             array = new byte[limit - position];
@@ -47,6 +55,8 @@ public class MappedBiggerFileReader {
             if(count < number){
                 count ++;
             }
+            OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+            System.out.println(operatingSystemMXBean.getFreeSwapSpaceSize());
             return limit - position;
         }
     }

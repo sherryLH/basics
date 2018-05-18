@@ -3,8 +3,11 @@ package file;
  * 内存文件映射
  */
 
+import com.sun.management.OperatingSystemMXBean;
+
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -31,10 +34,14 @@ public class MappedFileReader {
         if(limit - position > arraySize){
             array = new byte[arraySize];
             mappedBuf.get(array);
+            OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+            System.out.println(operatingSystemMXBean.getFreeSwapSpaceSize());
             return arraySize;
         }else{//读取剩余的数据
             array = new byte[limit-position];
             mappedBuf.get(array);
+            OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+            System.out.println(operatingSystemMXBean.getFreeSwapSpaceSize());
             return limit-position;
         }
     }

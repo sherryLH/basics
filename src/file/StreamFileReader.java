@@ -3,9 +3,13 @@ package file;
  * 文件字节流
  */
 
+import com.sun.management.OperatingSystemMXBean;
+import com.sun.management.UnixOperatingSystemMXBean;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 
 public class StreamFileReader {
     private BufferedInputStream bufferedInputStream;
@@ -26,6 +30,8 @@ public class StreamFileReader {
         if (bytes != -1){
             array = new byte[bytes];
             System.arraycopy(tmpArray,0,array,0,bytes);
+            OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+            System.out.println(operatingSystemMXBean.getFreeSwapSpaceSize());
             return bytes;
         }
         return -1;

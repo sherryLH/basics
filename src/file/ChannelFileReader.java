@@ -3,8 +3,11 @@ package file;
  * 文件通道
  */
 
+import com.sun.management.OperatingSystemMXBean;
+
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -30,6 +33,8 @@ public class ChannelFileReader {
             byteBuffer.flip();
             byteBuffer.get(array);//从byteBuffer中得到字节数组
             byteBuffer.clear();
+            OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+            System.out.println(operatingSystemMXBean.getFreeSwapSpaceSize());
             return bytes;
         }
         return -1;
